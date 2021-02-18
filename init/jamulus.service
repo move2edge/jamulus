@@ -1,0 +1,17 @@
+ [Unit]
+ Description=My Sample Service
+ After=multi-user.target jack.service
+
+ [Service]
+ Type=simple
+ Restart=always
+ Environment=JACK_NO_AUDIO_RESERVATION=1
+ RestartSec=3
+ User=root
+ WorkingDirectory=/home/pi/
+ ExecStart=/home/pi/work/jamulus-github/Jamulus -n
+ ExecStop=pkill -9 Jamulus
+ User=root
+
+ [Install]
+ WantedBy=multi-user.target

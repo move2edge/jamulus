@@ -1,0 +1,17 @@
+ [Unit]
+ Description=My Sample Service
+ After=multi-user.target
+
+ [Service]
+ Type=simple
+ Restart=always
+ User=root
+ Environment=JACK_NO_AUDIO_RESERVATION=1
+ RestartSec=3
+ WorkingDirectory=/home/pi/
+#ExecStart=/usr/bin/jackd -dalsa -dhw:CODEC,0 -r48000 -p64 -n2
+ ExecStart=/home/pi/work/jamulus-github/distributions/jack2/build/jackd  -R --silent -P70 -p16 -t2000 -d alsa -dhw:CODEC,0 -r96000 -p64 -n3 -s 
+ ExecStop=pkill -9 jackd
+
+ [Install]
+ WantedBy=multi-user.target

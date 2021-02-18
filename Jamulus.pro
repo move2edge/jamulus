@@ -8,7 +8,7 @@ contains(CONFIG, "noupcasename") {
 
 CONFIG += qt \
     thread \
-    release
+    debug
 
 QT += network \
     xml \
@@ -339,6 +339,7 @@ win32 {
 
         INSTALLS += target desktop icons
     }
+  LIBS += -Llibs/amqp/ -lamqpcpp -levent
 }
 
 RCC_DIR = src/res
@@ -353,6 +354,10 @@ FORMS_GUI = src/clientdlgbase.ui \
 
 HEADERS += src/buffer.h \
     src/channel.h \
+    src/clientapi.h \
+    src/amqpworker.h \
+    src/jsonparser.h \
+    src/conn_handler.h \
     src/client.h \
     src/global.h \
     src/multicolorled.h \
@@ -453,6 +458,9 @@ HEADERS_OPUS_X86 = libs/opus/celt/x86/celt_lpc_sse.h \
 
 SOURCES += src/buffer.cpp \
     src/channel.cpp \
+    src/clientapi.cpp \
+    src/amqpworker.cpp \
+    src/jsonparser.cpp \
     src/client.cpp \
     src/main.cpp \
     src/protocol.cpp \

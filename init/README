@@ -1,0 +1,5 @@
+copy to /lib/systemd/system
+use 
+sudo systectl daemon-reload
+sudo systemctl enable jack.service
+sudo systemctl enable jamulus.service

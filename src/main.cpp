@@ -32,6 +32,7 @@
 # include "clientdlg.h"
 # include "serverdlg.h"
 #endif
+#include "clientapi.h"
 #include "settings.h"
 #include "testbench.h"
 #include "util.h"
@@ -62,6 +63,7 @@ int main ( int argc, char** argv )
     bool         bIsClient                   = true;
 #endif
     bool         bUseGUI                     = true;
+    bool         bUseAMQP                  = true;
     bool         bStartMinimized             = false;
     bool         bShowComplRegConnList       = false;
     bool         bDisconnectAllClientsOnQuit = false;
@@ -116,6 +118,17 @@ int main ( int argc, char** argv )
             bUseGUI = false;
             tsConsole << "- no GUI mode chosen" << endl;
             CommandLineOptions << "--nogui";
+            continue;
+        }
+        //
+        // Use AMQP flag --------------------------------------------------------
+        if ( GetFlagArgument ( argv,
+                               i,
+                               "-N",
+                               "--noamqp" ) )
+        {
+            bUseAMQP = false;
+            tsConsole << "- no AMQP mode chosen" << endl;
             continue;
         }
 
@@ -650,8 +663,22 @@ int main ( int argc, char** argv )
                 CInstPictures::UpdateTableOnLanguageChange();
             }
 
+            if (bUseAMQP)
+            {
+                // only start application without using the GUI
+                tsConsole << GetVersionAndNameStr ( false ) << endl;
+                CClientAPI ClientApi ( &Client,
+                                       &Settings,
+                                       tsConsole,
+                                       strConnOnStartupAddress,
+                                       bShowComplRegConnList,
+                                       bShowAnalyzerConsole);
+
+
+                pApp->exec();
+            }
 #ifndef HEADLESS
-            if ( bUseGUI )
+            else if ( bUseGUI )
             {
                 // GUI object
                 CClientDlg ClientDlg ( &Client,
@@ -667,8 +694,8 @@ int main ( int argc, char** argv )
                 ClientDlg.show();
                 pApp->exec();
             }
-            else
 #endif
+            else
             {
                 // only start application without using the GUI
                 tsConsole << GetVersionAndNameStr ( false ) << endl;

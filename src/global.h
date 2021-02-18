@@ -189,7 +189,7 @@ LED bar:      lbr
 #define MAX_NUM_SERVERS_IN_SERVER_LIST   150 // reduced to 150 because we now have genre-based server lists
 
 // defines the time interval at which the ping time is updated in the GUI
-#define PING_UPDATE_TIME_MS              500 // ms
+#define PING_UPDATE_TIME_MS              3000 // ms
 
 // defines the time interval at which the ping time is updated for the server list
 #define PING_UPDATE_TIME_SERVER_LIST_MS  2500 // ms
